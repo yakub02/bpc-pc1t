@@ -1,0 +1,74 @@
+#include "Snake.h"
+#include <conio.h>
+#include <stdio.h>
+#include <stdlib.h>
+//#include <unistd.h>
+
+using namespace std;
+
+int i ,j, height = 36, width = 36;
+int gameover, score;
+int x, y, fruitx, fruity, flag;
+
+/*void setup()
+{
+    gameover = 0;
+
+    x = height / 2;
+    y = width / 2;
+
+
+}*/
+void draw()
+{
+    for (i = 0; i < height; i++) 
+    {
+        for (j = 0; j < width; j++) 
+        {
+            if (i == 0 || i == width - 1 || j == 0
+                || j == height - 1) 
+            {
+                printf("#");
+            }
+            else 
+            {
+                printf(" ");
+            }
+        }
+        printf("\n");
+    }
+}
+void input()
+{
+    if (kbhit()) 
+    {
+        switch (getch()) 
+        {
+        case 'a':
+            flag = 1;
+            break;
+        case 's':
+            flag = 2;
+            break;
+        case 'd':
+            flag = 3;
+            break;
+        case 'w':
+            flag = 4;
+            break;
+        case 'x':
+            gameover = 1;
+            break;
+        }
+    }
+}
+void logic()
+{
+    //sleep(0.01);
+
+}
+void main()
+{
+    draw();
+    
+}
