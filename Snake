@@ -9,7 +9,7 @@
 #include <process.h>
 
 #define N 20
-#define M 40
+#define M 80
 
 int i, j;
 int field[N][M];
