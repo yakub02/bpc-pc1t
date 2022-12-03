@@ -8,12 +8,18 @@
 #define N 20 //radky
 #define M 80 //sloupce
 
-int i, j, field[N][M]; //field - herní pole kde se pohybuje had
+#define UP 72 //nahoru
+#define DOWN 80 //dolu
+#define LEFT 75 //doleva
+#define RIGHT 77 //doprava
+
+int i, j, field[N][M]; //field - hernÃ­ pole kde se pohybuje had
 int x, y, Gy, head, tail, game, points; // x,y = cords of snake // game = game loop aby bezela hra dokola //points = body
 int a, b; // nahodne pozice pointu
+int key, dir; //pohyb
 void snakeProperties() { //inicializace hada
 
-    for (i = 0; i < N; i++){
+    for (i = 0; i < N; i++) {
         for (j = 0; j < M; j++) {
             field[i][j] = 0;
         }
@@ -34,10 +40,10 @@ void printBorder() {
         printf("%c", 43);
     }
     printf("\n");
-    
-    
+
+
     for (int i = 0; i <= N + 1; i++) {     // stred herniho pole
-        
+
         printf("%c", 43);
         for (int j = 0; j < M + 1; j++) {
             if (field[i][j] == 0) printf(" ");
@@ -47,7 +53,7 @@ void printBorder() {
             if (j == M) printf("%c\n", 43);
         }
     }
-     
+
 
     for (int i = 0; i <= M + 1; i++) {    // spodni radek
         printf("%c", 43);
@@ -64,7 +70,7 @@ void ResetScreenPosition() {
     SetConsoleCursorPosition(hOut, Position);
 }
 
-Random() { //nahodna pozice pointu v poli
+void Random() { //nahodna pozice pointu v poli
     srand(time(0)); //nahodna pozice pro point 
     a = 1 + rand() % 18; //18 kvuli 0 a 20 pozici, kde by byl point v borderu herniho pole
     b = 1 + rand() % 78;
@@ -73,7 +79,37 @@ Random() { //nahodna pozice pointu v poli
         field[a][b] = -1;
         points = 1;
     }
- }
+}
+
+int Hit() { //registrace stisku klavesy
+    if (_kbhit())
+        return _getch();
+    else
+        return -1;
+}
+void movement() {
+    key = Hit();
+
+    if (((key == RIGHT || key == LEFT) || (key == UP || key == DOWN)) && (abs(dir - key) > 5)) dir = key;
+   
+    if (dir == UP)
+        x--;
+        head++;
+        field[x][y] = head;
+    if (dir == DOWN)
+        x++;
+        head++;
+        field[x][y] = head;
+    if (dir == RIGHT)
+        y++;
+        head++;
+        field[x][y] = head;
+    if (dir == LEFT)
+        y--;
+        head++;
+        field[x][y] = head;
+
+}
 void main() {
 
     snakeProperties();
@@ -82,5 +118,8 @@ void main() {
         printBorder();
         ResetScreenPosition();
         Random();
+        movement();
+        //sleep(99);
+
     }
 }
