@@ -25,7 +25,7 @@ void snakeProperties() { //inicializace hada
         }
     }
 
-    x = N / 2; y = M / 2; Gy = y; head = 5; tail = 1, game = 0; points = 0; //pozice hada uprostred pole, //kdyz game = 0 
+    x = N / 2; y = M / 2; Gy = y; head = 5; tail = 1, game = 0; points = 0; dir = RIGHT; //pozice hada uprostred pole, //kdyz game = 0, //smer kterzm had zacina
 
     for (i = 0; i < head; i++) {
 
@@ -90,7 +90,7 @@ int Hit() { //registrace stisku klavesy
 void movement() {
     key = Hit();
 
-    if (((key == RIGHT || key == LEFT) || (key == UP || key == DOWN)) && (abs(dir - key) > 5)) dir = key; //kontrola, aby had nemohl jit zpet do sveho tela
+    if (((key == RIGHT || key == LEFT) || (key == UP || key == DOWN)) && (abs(dir - key) > 3)) dir = key; //kontrola, aby had nemohl otocit zpet do sveho tela
    
     if (dir == UP){ //pohyb nahoru
         x--;
@@ -114,6 +114,17 @@ void movement() {
     }
 
 }
+void tailremover() {
+    for (i = 0;i < N;i++) {
+        for (j = 0;j < M;j++) {
+            if (field[i][j] == tail) { //konstantni odstranovani konce hada 
+                field[i][j] = 0;
+            }
+        }
+    }
+    tail++; //opetovne pridavani konce hada, diky tomu zustava delka konstantni
+}
+
 void main() {
 
     snakeProperties();
@@ -123,6 +134,7 @@ void main() {
         ResetScreenPosition();
         Random();
         movement();
+        tailremover();
         //sleep(99);
 
     }
