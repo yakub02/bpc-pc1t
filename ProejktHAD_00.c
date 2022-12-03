@@ -90,24 +90,28 @@ int Hit() { //registrace stisku klavesy
 void movement() {
     key = Hit();
 
-    if (((key == RIGHT || key == LEFT) || (key == UP || key == DOWN)) && (abs(dir - key) > 5)) dir = key;
+    if (((key == RIGHT || key == LEFT) || (key == UP || key == DOWN)) && (abs(dir - key) > 5)) dir = key; //kontrola, aby had nemohl jit zpet do sveho tela
    
-    if (dir == UP)
+    if (dir == UP){ //pohyb nahoru
         x--;
         head++;
         field[x][y] = head;
-    if (dir == DOWN)
+    }
+    if (dir == DOWN){ //pohyb dolu
         x++;
         head++;
         field[x][y] = head;
-    if (dir == RIGHT)
+    }
+    if (dir == RIGHT){ //pohyb doprava
         y++;
         head++;
         field[x][y] = head;
-    if (dir == LEFT)
+    }
+    if (dir == LEFT){ //pohyb doleva
         y--;
         head++;
         field[x][y] = head;
+    }
 
 }
 void main() {
