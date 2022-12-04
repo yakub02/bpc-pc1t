@@ -91,32 +91,36 @@ void movement() {
     key = Hit();
 
     if (((key == RIGHT || key == LEFT) || (key == UP || key == DOWN)) && (abs(dir - key) > 3)) dir = key; //kontrola, aby had nemohl otocit zpet do sveho tela
-   
-    if (dir == UP){ //pohyb nahoru
+
+    if (dir == UP) { //pohyb nahoru
         x--;
         head++;
         field[x][y] = head;
+        if (x == 0) x = N - 1; // had nemuze prekrocit hranici hraciho pole ale objevi se na stejnem miste ale dole
     }
-    if (dir == DOWN){ //pohyb dolu
+    if (dir == DOWN) { //pohyb dolu
         x++;
         head++;
         field[x][y] = head;
+        if (x == N - 1) x = 0; // had nemuze prekrocit hranici hraciho pole ale objevi se na stejnem miste ale nahore
     }
-    if (dir == RIGHT){ //pohyb doprava
+    if (dir == RIGHT) { //pohyb doprava
         y++;
         head++;
         field[x][y] = head;
+        if (y == M - 1) y = 0; // had nemuze prekrocit hranici hraciho pole ale objevi se na stejnem miste ale vlevo
     }
-    if (dir == LEFT){ //pohyb doleva
+    if (dir == LEFT) { //pohyb doleva
         y--;
         head++;
         field[x][y] = head;
+        if (y == 0) y = M - 1; // had nemuze prekrocit hranici hraciho pole ale objevi se na stejnem miste ale vpravo
     }
 
 }
 void tailremover() {
-    for (i = 0;i < N;i++) {
-        for (j = 0;j < M;j++) {
+    for (i = 0; i < N; i++) {
+        for (j = 0; j < M; j++) {
             if (field[i][j] == tail) { //konstantni odstranovani konce hada 
                 field[i][j] = 0;
             }
@@ -136,6 +140,5 @@ void main() {
         movement();
         tailremover();
         //sleep(99);
-
     }
 }
