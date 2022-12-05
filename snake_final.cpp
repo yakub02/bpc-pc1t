@@ -87,8 +87,6 @@ void printBorder() {
         printf("%c", 43);
     }
     printf("\n  Aktualni skore : %d", score);
-    printf("\n  Nejvyssi skore : "); printf("\033[0;31m"); printf("%d", highscore);
-    printf("\033[0m"); //zmena na puvodni barvu
     printf("\n");
 }
 
@@ -118,21 +116,16 @@ void konecHry() {
     Sleep(1500);
     system("Cls"); //vymaze command prompt
 
-    if (score > highscore) {
-        printf("\033[0;31m"); //zmena na cervenou barvu
-        printf(" %d!\n\n", score);
-        system("pause");
-        f = fopen("tabulka.txt", "a"); //otevre txt ve write mode
-        fprintf(f, "%s %d", nplname, score);
-        fclose(f);
-    }
-
-
+    f = fopen("tabulka.txt", "a"); //otevre txt ve write mode
+    fprintf(f, "%s %d", nplname, score);
+    fclose(f);
+    
     system("cls");
     printf("\033[0;31m"); //zmena na cervenou barvu
     printf("\n\n    KONEC HRY\n\n");
     printf("    SKORE :  %d \n\n", score);
     printf("\033[0m"); //zmena na puvodni barvu
+    system("pause");
     game = 1;
 }
 
@@ -209,6 +202,5 @@ void main() {
         Random();
         movement();
         tailremover();
-        //sleep(99);
     }
 }
