@@ -1,4 +1,3 @@
-#include "Snake.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <windows.h>
@@ -14,7 +13,7 @@
 #define LEFT 75 //doleva
 #define RIGHT 77 //doprava
 
-int i, j, field[N][M]; //field - herní pole kde se pohybuje had
+int i, j, field[N][M]; //field - hernÃ­ pole kde se pohybuje had
 int x, y, Gy, head, tail, game, points; // x,y = cords of snake // game = game loop aby bezela hra dokola //points = body
 int a, b; // nahodne pozice pointu
 int key, dir; //pohyb
@@ -54,7 +53,7 @@ void printBorder() {
     printf("\n");
 
 
-    for (int i = 0; i < N + 1; i++) {     // stred herniho pole
+    for (int i = 0; i < N - 1 ; i++) {     // stred herniho pole
 
         printf("%c", 43);
         for (int j = 0; j < M; j++) {
@@ -63,7 +62,7 @@ void printBorder() {
             if (field[i][j] == head) printf("%c", 233);
             if (field[i][j] == -1) printf("%c", 248);
         }
-        if (j == M) printf("%c\n", 43);
+        printf("%c\n", 43);
     }
 
     for (int i = 0; i <= M + 1; i++) {    // spodni radek
@@ -148,61 +147,6 @@ void movement() {
     }
 }
 
-// pohyb sipkama pres switch
-/*
-int flag;
-void input()
-{
-    if (kbhit()) {
-        switch (getch()) {
-        case LEFT:
-            flag = 1;
-            break;
-        case DOWN:
-            flag = 2;
-            break;
-        case RIGHT:
-            flag = 3;
-            break;
-        case UP:
-            flag = 4;
-            break;
-        }
-    }
-}
-void movement_arrows()
-{
-    if ((((flag == RIGHT || flag == LEFT) && (abs(dir - flag) > 2)) || ((flag == UP || flag == DOWN)) && (abs(dir - flag) > 8))) dir = flag;
-    //sleep(0.01);
-    switch (flag) {
-    case 1: //doleva
-        y--;
-        head++;
-        field[x][y] = head;
-        break;
-    case 2: //dolu
-        x++;
-        head++;
-        field[x][y] = head;
-        if (x == N - 1) x = 0;
-        break;
-    case 3: //doprava
-        y++;
-        head++;
-        field[x][y] = head;
-        if (y == M - 1) y = 0;
-        break;
-    case 4: //nahoru
-        x--;
-        head++;
-        field[x][y] = head;
-        if (x == 0) x = N - 1;
-        break;
-    default:
-        break;
-    }
-}*/
-
 void tailremover() {
     for (i = 0; i < N; i++) {
         for (j = 0; j < M; j++) {
@@ -223,8 +167,6 @@ void main() {
         ResetScreenPosition();
         Random();
         movement();
-        //input();
-        //movement_arrows();
         tailremover();
         //sleep(99);
     }
