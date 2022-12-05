@@ -13,7 +13,7 @@
 #define LEFT 75 //doleva
 #define RIGHT 77 //doprava
 
-int i, j, field[N][M]; //field - herní pole kde se pohybuje had
+int i, j, field[N][M]; //field - herni pole kde se pohybuje had
 int x, y, Gy, head, tail, game, points; // x,y = cords of snake // game = game loop aby bezela hra dokola //points = body
 int a, b; // nahodne pozice pointu
 int key, dir; //pohyb
@@ -54,7 +54,6 @@ void printBorder() {
             if (j == M) printf("%c\n", 43);
         }
     }
-
 
     for (int i = 0; i <= M + 1; i++) {    // spodni radek
         printf("%c", 43);
@@ -103,31 +102,32 @@ void movement() {
     if (dir == UP) { //pohyb nahoru
         x--;
         head++;
-        field[x][y] = head;
         if (field[x][y] == -1) points = 0;
+        field[x][y] = head;
         if (x == -1) x = N - 1; // had nemuze prekrocit hranici hraciho pole ale objevi se na stejnem miste ale dole
     }
     if (dir == DOWN) { //pohyb dolu
         x++;
         head++;
-        field[x][y] = head;
         if (field[x][y] == -1) points = 0;
+        field[x][y] = head;
         if (x == N) x = -1; // had nemuze prekrocit hranici hraciho pole ale objevi se na stejnem miste ale nahore
     }
     if (dir == RIGHT) { //pohyb doprava
         y++;
         head++;
-        field[x][y] = head;
-        if (field[x][y] == 0) points = 0;
+        if (field[x][y] == -1) points = 0;
+        field[x][y] = head;   
         if (y == M - 1) y = 0; // had nemuze prekrocit hranici hraciho pole ale objevi se na stejnem miste ale vlevo
     }
     if (dir == LEFT) { //pohyb doleva
         y--;
         head++;
+        if (field[x][y] == -1) points = 0;
         field[x][y] = head;
-        if (field[x][y] == 0) points = 0;
         if (y == 0) y = M - 1; // had nemuze prekrocit hranici hraciho pole ale objevi se na stejnem miste ale vpravo
     }
+
 }
 
 void tailremover() {
