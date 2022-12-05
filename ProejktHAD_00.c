@@ -17,6 +17,12 @@ int i, j, field[N][M]; //field - herní pole kde se pohybuje had
 int x, y, Gy, head, tail, game, points; // x,y = cords of snake // game = game loop aby bezela hra dokola //points = body
 int a, b; // nahodne pozice pointu
 int key, dir; //pohyb
+int gameover;
+
+/////////////////////////
+// inicializace hada
+////////////////////////
+
 void snakeProperties() { //inicializace hada
 
     for (i = 0; i < N; i++) {
@@ -32,7 +38,12 @@ void snakeProperties() { //inicializace hada
         Gy++;
         field[x][Gy - head] = i + 1;
     }
+    gameover = 0;
 }
+
+//////////////////////////////////
+// herni pole, kde se had pohybuje
+//////////////////////////////////
 
 void printBorder() {
 
@@ -59,7 +70,13 @@ void printBorder() {
         printf("%c", 43);
     }
     printf("\n");
+
+    printf("score =");
+    printf("\n");
+    printf("press X to quit the game");
 }
+
+
 void ResetScreenPosition() {
 
     HANDLE hOut;
@@ -81,16 +98,25 @@ void Random() { //nahodna pozice pointu v poli
     }
 }
 
+//////////////////////////////////////
+// pohyb hada
+//////////////////////////////////////
 int Hit() { //registrace stisku klavesy
     if (_kbhit())
         return _getch();
     else
         return -1;
 }
+
+
 void movement() {
     key = Hit();
-
-   if ((((key == RIGHT || key == LEFT) && (abs(dir - key) > 2)) || ((key == UP || key == DOWN)) && (abs(dir - key) > 8))) dir = key; //kontrola, aby had nemohl otocit zpet do sveho tela
+    //kontrola, aby had nemohl otocit zpet do sveho tela
+    if ((key == LEFT && dir != RIGHT) ||
+        (key == RIGHT && dir != LEFT) ||
+        (key == UP && dir != DOWN) ||
+        (key == DOWN && dir != UP))
+        dir = key;
 
     if (dir == UP) { //pohyb nahoru
         x--;
@@ -116,8 +142,64 @@ void movement() {
         field[x][y] = head;
         if (y == 0) y = M - 1; // had nemuze prekrocit hranici hraciho pole ale objevi se na stejnem miste ale vpravo
     }
-
 }
+
+// pohyb sipkama pres switch
+/*
+int flag;
+void input()
+{
+    if (kbhit()) {
+        switch (getch()) {
+        case LEFT:
+            flag = 1;
+            break;
+        case DOWN:
+            flag = 2;
+            break;
+        case RIGHT:
+            flag = 3;
+            break;
+        case UP:
+            flag = 4;
+            break;
+        }
+    }
+}
+
+void movement_arrows()
+{
+    if ((((flag == RIGHT || flag == LEFT) && (abs(dir - flag) > 2)) || ((flag == UP || flag == DOWN)) && (abs(dir - flag) > 8))) dir = flag;
+    //sleep(0.01);
+    switch (flag) {
+    case 1: //doleva
+        y--;
+        head++;
+        field[x][y] = head;
+        break;
+    case 2: //dolu
+        x++;
+        head++;
+        field[x][y] = head;
+        if (x == N - 1) x = 0;
+        break;
+    case 3: //doprava
+        y++;
+        head++;
+        field[x][y] = head;
+        if (y == M - 1) y = 0;
+        break;
+    case 4: //nahoru
+        x--;
+        head++;
+        field[x][y] = head;
+        if (x == 0) x = N - 1;
+        break;
+    default:
+        break;
+    }
+}*/
+
 void tailremover() {
     for (i = 0; i < N; i++) {
         for (j = 0; j < M; j++) {
@@ -138,6 +220,8 @@ void main() {
         ResetScreenPosition();
         Random();
         movement();
+        //input();
+        //movement_arrows();
         tailremover();
         //sleep(99);
     }
