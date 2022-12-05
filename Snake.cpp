@@ -6,22 +6,18 @@
 #include <time.h>
 
 #define N 20 //radky
-#define M 70 //sloupce
+#define M 80 //sloupce
 
 #define UP 72 //nahoru
 #define DOWN 80 //dolu
 #define LEFT 75 //doleva
 #define RIGHT 77 //doprava
 
-int i, j, field[N][M]; //field - herní pole kde se pohybuje had
+int i, j, field[N][M]; //field - herni pole kde se pohybuje had
 int x, y, Gy, head, tail, game, points; // x,y = cords of snake // game = game loop aby bezela hra dokola //points = body
 int a, b; // nahodne pozice pointu
 int key, dir; //pohyb
 int gameover;
-
-/////////////////////////
-// inicializace hada
-////////////////////////
 
 void snakeProperties() { //inicializace hada
 
@@ -31,19 +27,14 @@ void snakeProperties() { //inicializace hada
         }
     }
 
-x = N / 2; y = M / 2; Gy = y; head = 5; tail = 1, game = 0; points = 0; dir = RIGHT; //pozice hada uprostred pole, //kdyz game = 0, //smer kterzm had zacina
+    x = N / 2; y = M / 2; Gy = y; head = 5; tail = 1, game = 0; points = 0; dir = RIGHT; //pozice hada uprostred pole, //kdyz game = 0, //smer kterzm had zacina
 
     for (i = 0; i < head; i++) {
 
         Gy++;
         field[x][Gy - head] = i + 1;
     }
-    gameover = 0;
 }
-
-//////////////////////////////////
-// herni pole, kde se had pohybuje
-//////////////////////////////////
 
 void printBorder() {
 
@@ -52,8 +43,7 @@ void printBorder() {
     }
     printf("\n");
 
-
-    for (int i = 0; i < N - 1 ; i++) {     // stred herniho pole
+    for (int i = 0; i < N - 1; i++) {     // stred herniho pole
 
         printf("%c", 43);
         for (int j = 0; j < M; j++) {
@@ -74,7 +64,6 @@ void printBorder() {
     printf("\n");
     printf("press X to quit the game");
 }
-
 
 void ResetScreenPosition() {
 
@@ -97,9 +86,15 @@ void Random() { //nahodna pozice pointu v poli
     }
 }
 
-//////////////////////////////////////
-// pohyb hada
-//////////////////////////////////////
+void konecHry() {
+    printf("\a");
+    Sleep(1500);
+    system("Cls"); //vymaze command prompt
+
+    printf("\n\n\n          game over!!!\n\n\n");
+    game = 1;
+}
+
 int Hit() { //registrace stisku klavesy
     if (_kbhit())
         return _getch();
@@ -107,7 +102,7 @@ int Hit() { //registrace stisku klavesy
         return -1;
 }
 
-
+//nefunknci pohyb pres sipky
 void movement() {
     key = Hit();
     //kontrola, aby had nemohl otocit zpet do sveho tela
@@ -119,32 +114,37 @@ void movement() {
 
     if (dir == UP) { //pohyb nahoru
         x--;
+        if (field[x][y] != 0 && field[x][y] != -1) konecHry();
         head++;
+        if (field[x][y] == -1) points = 0, tail -= 1;
         field[x][y] = head;
-        if (field[x][y] == -1) points = 0;
-        if (x == 0) x = N - 1; // had nemuze prekrocit hranici hraciho pole ale objevi se na stejnem miste ale dole
+        if (x == -1) konecHry(); // had nemuze prekrocit hranici hraciho pole ale objevi se na stejnem miste ale dole
     }
     if (dir == DOWN) { //pohyb dolu
         x++;
+        if (field[x][y] != 0 && field[x][y] != -1) konecHry();
         head++;
+        if (field[x][y] == -1) points = 0, tail -= 1;
         field[x][y] = head;
-        if (field[x][y] == -1) points = 0;
-        if (x == N - 1) x = 0; // had nemuze prekrocit hranici hraciho pole ale objevi se na stejnem miste ale nahore
+        if (x == N) konecHry(); // had nemuze prekrocit hranici hraciho pole ale objevi se na stejnem miste ale nahore
     }
     if (dir == RIGHT) { //pohyb doprava
         y++;
+        if (field[x][y] != 0 && field[x][y] != -1) konecHry();
         head++;
+        if (field[x][y] == -1) points = 0, tail -= 1;
         field[x][y] = head;
-        if (field[x][y] == -1) points = 0;
-        if (y == M - 1) y = 0; // had nemuze prekrocit hranici hraciho pole ale objevi se na stejnem miste ale vlevo
+        if (y == M - 1) konecHry(); // had nemuze prekrocit hranici hraciho pole ale objevi se na stejnem miste ale vlevo
     }
     if (dir == LEFT) { //pohyb doleva
         y--;
+        if (field[x][y] != 0 && field[x][y] != -1) konecHry();
         head++;
+        if (field[x][y] == -1) points = 0, tail -= 1;
         field[x][y] = head;
-        if (field[x][y] == -1) points = 0;
-        if (y == 0) y = M - 1; // had nemuze prekrocit hranici hraciho pole ale objevi se na stejnem miste ale vpravo
+        if (y == 0) konecHry(); // had nemuze prekrocit hranici hraciho pole ale objevi se na stejnem miste ale vpravo
     }
+
 }
 
 void tailremover() {
