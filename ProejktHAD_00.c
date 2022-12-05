@@ -82,6 +82,15 @@ void Random() { //nahodna pozice pointu v poli
     }
 }
 
+void konecHry() {
+    printf("\a");
+    Sleep(1500);
+    system("Cls"); //vymaze command prompt
+
+    printf("\n\n\n          game over!!!\n\n\n");
+    game = 1;
+}
+
 int Hit() { //registrace stisku klavesy
     if (_kbhit())
         return _getch();
@@ -101,31 +110,35 @@ void movement() {
 
     if (dir == UP) { //pohyb nahoru
         x--;
+        if (field[x][y] != 0 && field[x][y] != -1) konecHry();
         head++;
         if (field[x][y] == -1) points = 0, tail -= 1;
         field[x][y] = head;
-        if (x == -1) x = N - 1; // had nemuze prekrocit hranici hraciho pole ale objevi se na stejnem miste ale dole
+        if (x == -1) konecHry(); // had nemuze prekrocit hranici hraciho pole ale objevi se na stejnem miste ale dole
     }
     if (dir == DOWN) { //pohyb dolu
         x++;
+        if (field[x][y] != 0 && field[x][y] != -1) konecHry();
         head++;
         if (field[x][y] == -1) points = 0, tail -= 1;
         field[x][y] = head;
-        if (x == N) x = -1; // had nemuze prekrocit hranici hraciho pole ale objevi se na stejnem miste ale nahore
+        if (x == N) konecHry(); // had nemuze prekrocit hranici hraciho pole ale objevi se na stejnem miste ale nahore
     }
     if (dir == RIGHT) { //pohyb doprava
         y++;
+        if (field[x][y] != 0 && field[x][y] != -1) konecHry();
         head++;
         if (field[x][y] == -1) points = 0, tail -= 1;
         field[x][y] = head;
-        if (y == M - 1) y = 0; // had nemuze prekrocit hranici hraciho pole ale objevi se na stejnem miste ale vlevo
+        if (y == M - 1) konecHry(); // had nemuze prekrocit hranici hraciho pole ale objevi se na stejnem miste ale vlevo
     }
     if (dir == LEFT) { //pohyb doleva
         y--;
+        if (field[x][y] != 0 && field[x][y] != -1) konecHry();
         head++;
         if (field[x][y] == -1) points = 0, tail -= 1;
         field[x][y] = head;
-        if (y == 0) y = M - 1; // had nemuze prekrocit hranici hraciho pole ale objevi se na stejnem miste ale vpravo
+        if (y == 0) konecHry(); // had nemuze prekrocit hranici hraciho pole ale objevi se na stejnem miste ale vpravo
     }
 
 }
@@ -140,6 +153,8 @@ void tailremover() {
     }
     tail++; //opetovne pridavani konce hada, diky tomu zustava delka konstantni
 }
+
+
 
 void main() {
 
