@@ -16,7 +16,7 @@
 #define RIGHT 77 //doprava
 
 int i, j, field[N][M]; //field - herni pole kde se pohybuje had
-int x, y, Gy, head, tail, game, points,score ,highscore; // x,y = cords of snake // game = game loop aby bezela hra dokola //points = body
+int x, y, Gy, head, tail, game, points, score, highscore; // x,y = cords of snake // game = game loop aby bezela hra dokola //points = body
 int a, b; // nahodne pozice pointu
 int key, dir; //pohyb
 
@@ -54,9 +54,12 @@ void printBorder() {
         printf("%c", 43);
         for (int j = 0; j < M; j++) {
             if (field[i][j] == 0) printf(" ");
-            if (field[i][j] > 0 && field[i][j] != head) printf("%c", 254);
-            if (field[i][j] == head) printf("%c", 233);
+            printf("\033[0;32m"); //zmena na zelenou barvu
+            if (field[i][j] > 0 && field[i][j] != head) printf("%c", 254); //vzkresleni hadova tela
+            if (field[i][j] == head) printf("0"); //vzkresleni hadovy hlavy
+            printf("\033[0;31m"); //zmena na cervenou barvu
             if (field[i][j] == -1) printf("%c", 248);
+            printf("\033[0m"); //zmena na puvodni barvu
         }
         printf("%c\n", 43);
     }
@@ -104,7 +107,9 @@ void konecHry() {
 
 
     system("cls");
+    printf("\033[0;31m"); //zmena na cervenou barvu
     printf("\n\n    KONEC HRY\n\n");
+    printf("\033[0m"); //zmena na puvodni barvu
     printf("    SKORE :  %d \n\n", score);
     game = 1;
 }
@@ -182,6 +187,5 @@ void main() {
         Random();
         movement();
         tailremover();
-        //sleep(99);
     }
 }
