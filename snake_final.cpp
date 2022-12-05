@@ -16,17 +16,14 @@
 #define RIGHT 77 //doprava
 
 int i, j, field[N][M]; //field - herni pole kde se pohybuje had
-int x, y, Gy, head, tail, game, points,score ,highscore; // x,y = cords of snake // game = game loop aby bezela hra dokola //points = body
+int x, y, Gy, head, tail, game, points, score, highscore; // x,y = cords of snake // game = game loop aby bezela hra dokola //points = body
 int a, b; // nahodne pozice pointu
 int key, dir; //pohyb
 
 FILE* f;
 
 void snakeProperties() { //inicializace hada
-    f = fopen("tabulka.txt", "r");
-    fscanf(f, "%d", &highscore);
-    fclose(f);
-
+    
     for (i = 0; i < N; i++) {
         for (j = 0; j < M; j++) {
             field[i][j] = 0;
@@ -39,6 +36,35 @@ void snakeProperties() { //inicializace hada
 
         Gy++;
         field[x][Gy - head] = i + 1;
+    }
+    {
+        char plname[20], nplname[20], cha, c;
+        int i, j, px;
+        FILE* info;
+        info = fopen("tabulka.txt", "a+");
+        getch();
+        system("cls");
+        printf("Zadej sve jmeno\n");
+        scanf("%[^\n]", plname);
+        for (j = 0; plname[j] != '\0'; j++) { //to convert the first letter after space to capital
+            nplname[0] = toupper(plname[0]);
+            if (plname[j - 1] == ' ')
+            {
+                nplname[j] = toupper(plname[j]);
+                nplname[j - 1] = plname[j - 1];
+            }
+            else nplname[j] = plname[j];
+        }
+        nplname[j] = '\0';
+
+        fprintf(info, "Jmeno hrace :%s\n", nplname);
+        //for date and time
+
+        fprintf(info, "Skore:%d\n", px = score);//call score to display score
+        for (i = 0; i <= 50; i++)
+            fprintf(info, "%c", '_');
+        fprintf(info, "\n");
+        fclose(info);
     }
 }
 
@@ -68,7 +94,7 @@ void printBorder() {
         printf("%c", 43);
     }
     printf("\n  Aktualni skore : %d", score);
-    printf("\n  Nejvyssi skore : ");printf("\033[0;31m");printf("%d", highscore);
+    printf("\n  Nejvyssi skore : "); printf("\033[0;31m"); printf("%d", highscore);
     printf("\033[0m"); //zmena na puvodni barvu
     printf("\n");
 }
