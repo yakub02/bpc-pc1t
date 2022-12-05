@@ -122,24 +122,28 @@ void movement() {
         x--;
         head++;
         field[x][y] = head;
+        if (field[x][y] == -1) points = 0;
         if (x == 0) x = N - 1; // had nemuze prekrocit hranici hraciho pole ale objevi se na stejnem miste ale dole
     }
     if (dir == DOWN) { //pohyb dolu
         x++;
         head++;
         field[x][y] = head;
+        if (field[x][y] == -1) points = 0;
         if (x == N - 1) x = 0; // had nemuze prekrocit hranici hraciho pole ale objevi se na stejnem miste ale nahore
     }
     if (dir == RIGHT) { //pohyb doprava
         y++;
         head++;
         field[x][y] = head;
+        if (field[x][y] == -1) points = 0;
         if (y == M - 1) y = 0; // had nemuze prekrocit hranici hraciho pole ale objevi se na stejnem miste ale vlevo
     }
     if (dir == LEFT) { //pohyb doleva
         y--;
         head++;
         field[x][y] = head;
+        if (field[x][y] == -1) points = 0;
         if (y == 0) y = M - 1; // had nemuze prekrocit hranici hraciho pole ale objevi se na stejnem miste ale vpravo
     }
 }
