@@ -90,7 +90,7 @@ int Hit() { //registrace stisku klavesy
 void movement() {
     key = Hit();
 
-    if (((key == RIGHT || key == LEFT) || (key == UP || key == DOWN)) && (abs(dir - key) > 3)) dir = key; //kontrola, aby had nemohl otocit zpet do sveho tela
+   if ((((key == RIGHT || key == LEFT) && (abs(dir - key) > 2)) || ((key == UP || key == DOWN)) && (abs(dir - key) > 8))) dir = key; //kontrola, aby had nemohl otocit zpet do sveho tela
 
     if (dir == UP) { //pohyb nahoru
         x--;
