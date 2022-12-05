@@ -48,9 +48,12 @@ void printBorder() {
         printf("%c", 43);
         for (int j = 0; j < M; j++) {
             if (field[i][j] == 0) printf(" ");
-            if (field[i][j] > 0 && field[i][j] != head) printf("%c", 254);
-            if (field[i][j] == head) printf("%c", 233);
+            printf("\033[0;32m"); //zmena na zelenou barvu
+            if (field[i][j] > 0 && field[i][j] != head) printf("%c", 254); //vzkresleni hadova tela
+            if (field[i][j] == head) printf("0"); //vzkresleni hadovy hlavy
+            printf("\033[0;31m"); //zmena na cervenou barvu
             if (field[i][j] == -1) printf("%c", 248);
+            printf("\033[0m"); //zmena na puvodni barvu
         }
         printf("%c\n", 43);
     }
@@ -60,9 +63,9 @@ void printBorder() {
     }
     printf("\n");
 
-    printf("score =");
+    printf("Skore =");
     printf("\n");
-    printf("press X to quit the game");
+    printf("Zmackni X pro ukonceni hry");
 }
 
 void ResetScreenPosition() {
@@ -86,12 +89,15 @@ void Random() { //nahodna pozice pointu v poli
     }
 }
 
-void konecHry() {
+void GameOver() {
     printf("\a");
     Sleep(1500);
     system("Cls"); //vymaze command prompt
 
-    printf("\n\n\n          game over!!!\n\n\n");
+    printf("\033[0;31m"); //zmena na cervenou barvu
+    printf("\n\n\n          GAME OVER\n\n\n");
+    printf("\033[0m"); //zmena na puvodni barvu
+    printf("       Tve skore je: \n\n\n");
     game = 1;
 }
 
@@ -114,35 +120,35 @@ void movement() {
 
     if (dir == UP) { //pohyb nahoru
         x--;
-        if (field[x][y] != 0 && field[x][y] != -1) konecHry();
+        if (field[x][y] != 0 && field[x][y] != -1) GameOver();
         head++;
         if (field[x][y] == -1) points = 0, tail -= 1;
         field[x][y] = head;
-        if (x == -1) konecHry(); // had nemuze prekrocit hranici hraciho pole ale objevi se na stejnem miste ale dole
+        if (x == -1) GameOver(); // had nemuze prekrocit hranici hraciho pole ale objevi se na stejnem miste ale dole
     }
     if (dir == DOWN) { //pohyb dolu
         x++;
-        if (field[x][y] != 0 && field[x][y] != -1) konecHry();
+        if (field[x][y] != 0 && field[x][y] != -1) GameOver();
         head++;
         if (field[x][y] == -1) points = 0, tail -= 1;
         field[x][y] = head;
-        if (x == N) konecHry(); // had nemuze prekrocit hranici hraciho pole ale objevi se na stejnem miste ale nahore
+        if (x == N) GameOver(); // had nemuze prekrocit hranici hraciho pole ale objevi se na stejnem miste ale nahore
     }
     if (dir == RIGHT) { //pohyb doprava
         y++;
-        if (field[x][y] != 0 && field[x][y] != -1) konecHry();
+        if (field[x][y] != 0 && field[x][y] != -1) GameOver();
         head++;
         if (field[x][y] == -1) points = 0, tail -= 1;
         field[x][y] = head;
-        if (y == M - 1) konecHry(); // had nemuze prekrocit hranici hraciho pole ale objevi se na stejnem miste ale vlevo
+        if (y == M - 1) GameOver(); // had nemuze prekrocit hranici hraciho pole ale objevi se na stejnem miste ale vlevo
     }
     if (dir == LEFT) { //pohyb doleva
         y--;
-        if (field[x][y] != 0 && field[x][y] != -1) konecHry();
+        if (field[x][y] != 0 && field[x][y] != -1) GameOver();
         head++;
         if (field[x][y] == -1) points = 0, tail -= 1;
         field[x][y] = head;
-        if (y == 0) konecHry(); // had nemuze prekrocit hranici hraciho pole ale objevi se na stejnem miste ale vpravo
+        if (y == 0) GameOver(); // had nemuze prekrocit hranici hraciho pole ale objevi se na stejnem miste ale vpravo
     }
 
 }
@@ -168,6 +174,6 @@ void main() {
         Random();
         movement();
         tailremover();
-        //sleep(99);
+        //Sleep(1500);
     }
 }
