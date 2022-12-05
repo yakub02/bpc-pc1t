@@ -1,4 +1,4 @@
-﻿#include "snake_final.h"
+#include "snake_final.h"
 #include <iostream>
 #include <stdio.h>
 #include <stdlib.h>
@@ -16,7 +16,7 @@
 #define RIGHT 77 //doprava
 
 int i, j, field[N][M]; //field - herni pole kde se pohybuje had
-int x, y, Gy, head, tail, game, points, score, highscore; // x,y = cords of snake // game = game loop aby bezela hra dokola //points = body
+int x, y, Gy, head, tail, game, points,score ,highscore; // x,y = cords of snake // game = game loop aby bezela hra dokola //points = body
 int a, b; // nahodne pozice pointu
 int key, dir; //pohyb
 
@@ -67,7 +67,9 @@ void printBorder() {
     for (int i = 0; i <= M + 1; i++) {    // spodni radek
         printf("%c", 43);
     }
-    printf("\n  Aktualni skore: %d Nejvyssi skore: %d", score, highscore);
+    printf("\n  Aktualni skore : %d", score);
+    printf("\n  Nejvyssi skore : ");printf("\033[0;31m");printf("%d", highscore);
+    printf("\033[0m"); //zmena na puvodni barvu
     printf("\n");
 }
 
@@ -98,6 +100,7 @@ void konecHry() {
     system("Cls"); //vymaze command prompt
 
     if (score > highscore) {
+        printf("\033[0;31m"); //zmena na cervenou barvu
         printf("Novy rekord %d!\n\n", score);
         system("pause");
         f = fopen("tabulka.txt", "w"); //otevre txt ve write mode
@@ -109,8 +112,10 @@ void konecHry() {
     system("cls");
     printf("\033[0;31m"); //zmena na cervenou barvu
     printf("\n\n    KONEC HRY\n\n");
-    printf("\033[0m"); //zmena na puvodni barvu
     printf("    SKORE :  %d \n\n", score);
+    printf("\033[0;32m"); //zmena na zelenou barvu
+    printf("   REKORD :  %d \n\n", highscore);
+    printf("\033[0m"); //zmena na puvodni barvu
     game = 1;
 }
 
@@ -187,5 +192,6 @@ void main() {
         Random();
         movement();
         tailremover();
+        //sleep(99);
     }
 }
