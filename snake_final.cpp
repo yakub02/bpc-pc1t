@@ -23,7 +23,35 @@ int key, dir; //pohyb
 FILE* f;
 
 void snakeProperties() { //inicializace hada
-    
+    {
+        printf("\nVitejte ve hre Had \n\n(Pokracujte stisknutim jakekoliv klavesy...)");
+        char plname[20], nplname[20], cha, c;
+        int i, j, px;
+        FILE* info;
+        info = fopen("tabulka.txt", "a+");
+        getch();
+        system("cls");
+        printf("Zadej sve jmeno\n");
+        scanf("%[^\n]", plname);
+        for (j = 0; plname[j] != '\0'; j++) {
+            nplname[0] = toupper(plname[0]);
+            if (plname[j - 1] == ' '){
+                nplname[j] = toupper(plname[j]);
+                nplname[j - 1] = plname[j - 1];
+            }
+            else nplname[j] = plname[j];
+        }
+        nplname[j] = '\0';
+
+        fprintf(info, "Jmeno hrace :%s\n", nplname);
+      
+        fprintf(info, "Skore:%d\n", px = score);//call score to display score
+        for (i = 0; i <= 50; i++)
+            fprintf(info, "%c", '_');
+        fprintf(info, "\n");
+        fclose(info);
+    }
+
     for (i = 0; i < N; i++) {
         for (j = 0; j < M; j++) {
             field[i][j] = 0;
@@ -36,35 +64,6 @@ void snakeProperties() { //inicializace hada
 
         Gy++;
         field[x][Gy - head] = i + 1;
-    }
-    {
-        char plname[20], nplname[20], cha, c;
-        int i, j, px;
-        FILE* info;
-        info = fopen("tabulka.txt", "a+");
-        getch();
-        system("cls");
-        printf("Zadej sve jmeno\n");
-        scanf("%[^\n]", plname);
-        for (j = 0; plname[j] != '\0'; j++) { //to convert the first letter after space to capital
-            nplname[0] = toupper(plname[0]);
-            if (plname[j - 1] == ' ')
-            {
-                nplname[j] = toupper(plname[j]);
-                nplname[j - 1] = plname[j - 1];
-            }
-            else nplname[j] = plname[j];
-        }
-        nplname[j] = '\0';
-
-        fprintf(info, "Jmeno hrace :%s\n", nplname);
-        //for date and time
-
-        fprintf(info, "Skore:%d\n", px = score);//call score to display score
-        for (i = 0; i <= 50; i++)
-            fprintf(info, "%c", '_');
-        fprintf(info, "\n");
-        fclose(info);
     }
 }
 
