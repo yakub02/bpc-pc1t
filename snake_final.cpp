@@ -50,6 +50,7 @@ void snakeProperties() { //inicializace hada
             fprintf(info, "%c", '_');
         fprintf(info, "\n");
         fclose(info);
+        system("cls");
     }
 
     for (i = 0; i < N; i++) {
