@@ -19,8 +19,7 @@ int i, j, field[N][M]; //field - herni pole kde se pohybuje had
 int x, y, Gy, head, tail, game, points, score, highscore; // x,y = cords of snake // game = game loop aby bezela hra dokola //points = body
 int a, b; // nahodne pozice pointu
 int key, dir; //pohyb
-char plname[20], nplname[20], cha, c; //max pocet znaku
-
+char plname[20], nplname[20], cha, c; //maximalni pocet znaku
 FILE* f;
 
 void snakeProperties() { //inicializace hada
@@ -28,11 +27,11 @@ void snakeProperties() { //inicializace hada
         printf("\nVitejte ve hre Had \n\n(Pokracujte stisknutim jakekoliv klavesy...)");
         int i, j, px;
         FILE* info;
-        info = fopen("tabulka.txt", "a+");
+        info = fopen("tabulka.txt", "a+"); //otevreni souboru "tabulka.txt"
         getch();
         system("cls");
         printf("Zadej sve jmeno\n");
-        scanf("%[^\n]", plname);
+        scanf("%[^\n]", plname); //zadani jmena hrace
         for (j = 0; plname[j] != '\0'; j++) {
             nplname[0] = toupper(plname[0]);
             if (plname[j - 1] == ' '){
@@ -42,12 +41,6 @@ void snakeProperties() { //inicializace hada
             else nplname[j] = plname[j];
         }
         nplname[j] = '\0';
-
-        fprintf(info, "Jmeno hrace :%s\n", nplname);
-      
-        fprintf(info, "Skore:%d\n", px = score);//call score to display score
-        for (i = 0; i <= 50; i++)
-            fprintf(info, "%c", '_');
         fprintf(info, "\n");
         fclose(info);
         system("cls");
@@ -127,9 +120,9 @@ void konecHry() {
 
     if (score > highscore) {
         printf("\033[0;31m"); //zmena na cervenou barvu
-        printf("Novy rekord %d!\n\n", score);
+        printf(" %d!\n\n", score);
         system("pause");
-        f = fopen("tabulka.txt", "w"); //otevre txt ve write mode
+        f = fopen("tabulka.txt", "a"); //otevre txt ve write mode
         fprintf(f, "%s %d", nplname, score);
         fclose(f);
     }
@@ -139,8 +132,6 @@ void konecHry() {
     printf("\033[0;31m"); //zmena na cervenou barvu
     printf("\n\n    KONEC HRY\n\n");
     printf("    SKORE :  %d \n\n", score);
-    printf("\033[0;32m"); //zmena na zelenou barvu
-    printf("   REKORD :  %d \n\n", highscore);
     printf("\033[0m"); //zmena na puvodni barvu
     game = 1;
 }
