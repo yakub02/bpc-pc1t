@@ -19,13 +19,13 @@ int i, j, field[N][M]; //field - herni pole kde se pohybuje had
 int x, y, Gy, head, tail, game, points, score, highscore; // x,y = cords of snake // game = game loop aby bezela hra dokola //points = body
 int a, b; // nahodne pozice pointu
 int key, dir; //pohyb
+char plname[20], nplname[20], cha, c; //max pocet znaku
 
 FILE* f;
 
 void snakeProperties() { //inicializace hada
     {
         printf("\nVitejte ve hre Had \n\n(Pokracujte stisknutim jakekoliv klavesy...)");
-        char plname[20], nplname[20], cha, c;
         int i, j, px;
         FILE* info;
         info = fopen("tabulka.txt", "a+");
@@ -130,7 +130,7 @@ void konecHry() {
         printf("Novy rekord %d!\n\n", score);
         system("pause");
         f = fopen("tabulka.txt", "w"); //otevre txt ve write mode
-        fprintf(f, "%d", score);
+        fprintf(f, "%s %d", nplname, score);
         fclose(f);
     }
 
