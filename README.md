@@ -1,3 +1,0 @@
-# prog
-test
-test test
